@@ -9,6 +9,7 @@ int blocksize_bytes = 32; // Cache Block size in bytes
 int cachesize_kb = 64;    // Cache size in KB
 int miss_penalty = 30;
 
+// Not tested yet
 long parseAddress(long addr, int start, int end)
 {
   long op = (1L << (end - start + 1));
