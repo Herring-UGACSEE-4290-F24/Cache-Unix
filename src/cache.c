@@ -72,6 +72,11 @@ int main(int argc, char *argv[])
     }
   }
 
+  int cacheRows = (cachesize_kb * 1024) / blocksize_bytes;
+
+  // Initialize cache
+  CacheBlock cache[cacheRows][associativity];
+
   // print out cache configuration
   printf("Cache parameters:\n");
   printf("Cache Size (KB)\t\t\t%d\n", cachesize_kb);
