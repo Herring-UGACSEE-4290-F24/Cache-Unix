@@ -1,11 +1,12 @@
 # Compiler/Debugger options
 CC=gcc
 DEBUGGER=gdb
-CFLAGS=-Wall
+CFLAGS=-Wall -I src/inc
 
 # Source and executable names
-FILE=cache
-EXE=$(FILE).out
+FILE=src/cache
+UTIL=src/util
+EXE=$(notdir $(FILE)).out
 
 # If the first argument is "run"...
 ifeq (run,$(firstword $(MAKECMDGOALS)))
@@ -22,7 +23,7 @@ ifeq (run,$(firstword $(MAKECMDGOALS)))
 endif
 
 build:
-	$(CC) $(CFLAGS) $(FILE).c -o $(EXE)
+	$(CC) $(CFLAGS) $(FILE).c $(UTIL).c -o $(EXE)
 
 run: build
 	gunzip -c traces/$(TRACE).trace.gz | ./$(EXE) $(CACHE_ARGS)

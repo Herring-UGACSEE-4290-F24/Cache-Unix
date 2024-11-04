@@ -3,19 +3,12 @@
 #include <string.h>
 #include <netinet/in.h>
 #include <math.h>
+#include "inc/util.h"
 
 int associativity = 2;    // Associativity of cache
 int blocksize_bytes = 32; // Cache Block size in bytes
 int cachesize_kb = 64;    // Cache size in KB
 int miss_penalty = 30;
-
-// Given an address and a start and end index, returns an unsigned 32 bit integer that represents the bits in the given
-// start and end point
-uint32_t parseAddress(uint32_t addr, uint8_t start, uint8_t end)
-{
-  unsigned long mask = ((1UL << (end - start + 1)) - 1) << (start - 1);
-  return (addr & mask) >> (start - 1);
-}
 
 void print_usage()
 {
