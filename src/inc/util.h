@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdlib.h"
+#include "math.h"
 
 // Initial struct for each block of the cache
 typedef struct 
@@ -10,9 +11,13 @@ typedef struct
     int data;
 } CacheBlock;
 
-// Given an address and a start and end index, returns an unsigned 32 bit integer that represents the bits in the given
+// Given an address and a start and end index, returns a long that represents the bits in the given
 // start and end point
-uint32_t parseAddress(int32_t addr, uint8_t start, uint8_t end);
+long parseAddress(long addr, uint8_t start, uint8_t end);
+
+// For direct mapped associativity, used to get location for storage
+long getBlockAddressDirect(long addr, int blockSizeBytes);
+int getBlockNumberDirect(long blockAddress, long numOfBlocks);
 
 // *** Just in case we need to use the heap ***
 // Allocate the cache

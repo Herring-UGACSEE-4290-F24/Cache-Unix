@@ -1,9 +1,19 @@
 #include "inc/util.h"
 
-uint32_t parseAddress(int32_t addr, uint8_t start, uint8_t end)
+long parseAddress(long addr, uint8_t start, uint8_t end)
 {
   unsigned long mask = ((1UL << (end - start + 1)) - 1) << (start - 1);
   return (addr & mask) >> (start - 1);
+}
+
+long getBlockAddressDirect(long addr, int blockSizeBytes)
+{
+  return floorl(addr / blockSizeBytes);
+}
+
+int getBlockNumberDirect(long blockAddress, long numOfBlocks)
+{
+  return blockAddress % numOfBlocks;
 }
 
 int allocateCache(int associativity, int totalSize, int blockSize)
