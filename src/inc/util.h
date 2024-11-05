@@ -15,6 +15,9 @@ typedef struct
 // start and end point
 long parseAddress(long addr, uint8_t start, uint8_t end);
 
+// Calculates how many rows needed in the 2D array
+int getCacheRows(int cacheSize_kb, int blockSize_b);
+
 // For direct mapped associativity, used to get location for storage
 long getBlockAddressDirect(long addr, int blockSizeBytes);
 int getBlockNumberDirect(long blockAddress, long numOfBlocks);

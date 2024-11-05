@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  int cacheRows = (cachesize_kb * 1024) / blocksize_bytes;
+  int cacheRows = getCacheRows(cachesize_kb, blocksize_bytes);
 
   // Initialize cache
   CacheBlock cache[cacheRows][associativity];
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
   {
     for (size_t j = 0; j < associativity; j++)
     {
-      cache[i][j].valid = 0;
+      cache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
       cache[i][j].tag = 0;
       cache[i][j].data = 0;
     }

@@ -6,6 +6,11 @@ long parseAddress(long addr, uint8_t start, uint8_t end)
   return (addr & mask) >> (start - 1);
 }
 
+int getCacheRows(int cacheSize_kb, int blockSize_b)
+{
+  return (cacheSize_kb * 1024) / blockSize_b;
+}
+
 long getBlockAddressDirect(long addr, int blockSizeBytes)
 {
   return floorl(addr / blockSizeBytes);
