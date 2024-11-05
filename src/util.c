@@ -8,8 +8,6 @@ uint32_t parseAddress(int32_t addr, uint8_t start, uint8_t end)
 
 int allocateCache(int associativity, int totalSize, int blockSize)
 {
-    int numberOfLines = (totalSize * 1024) / blockSize;
-
     return 0;
 }
 

@@ -14,7 +14,6 @@ typedef struct
 // start and end point
 uint32_t parseAddress(int32_t addr, uint8_t start, uint8_t end);
 
-
 // *** Just in case we need to use the heap ***
 // Allocate the cache
 int allocateCache(int associativity, int size, int blockSize);

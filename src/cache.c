@@ -77,6 +77,17 @@ int main(int argc, char *argv[])
   // Initialize cache
   CacheBlock cache[cacheRows][associativity];
 
+  // Set default cache values
+  for (size_t i = 0; i < cacheRows; i++)
+  {
+    for (size_t j = 0; j < associativity; j++)
+    {
+      cache[i][j].valid = -1;
+      cache[i][j].tag = 0;
+      cache[i][j].data = 0;
+    }
+  }  
+
   // print out cache configuration
   printf("Cache parameters:\n");
   printf("Cache Size (KB)\t\t\t%d\n", cachesize_kb);
