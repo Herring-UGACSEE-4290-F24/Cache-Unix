@@ -5,10 +5,45 @@
 #include <math.h>
 #include "inc/util.h"
 
+/*
+ *
+ * Simulator Knob Definitions
+ * 
+ */
+
 int associativity = 2;    // Associativity of cache
 int blocksize_bytes = 32; // Cache Block size in bytes
 int cachesize_kb = 64;    // Cache size in KB
 int miss_penalty = 30;
+
+/*
+ *
+ * Additional Intitial Params (for devising performance metrics of cache)
+ * 
+ */
+int total_instructions;
+int total_cycles;
+int execution_time;             // i.e. total CPU time
+int memory_accesses;
+double overall_miss_rate;       // percentatge?
+double overall_read_miss_rate;  
+int memory_cpi;                 // what is this?
+int total_cpi;
+int avg_mem_access_time;     // unit defined as number of cycles
+int dirty_evictions;
+int load_misses;
+int store_misses;
+int load_hits;
+int store__hits;
+
+/*
+ * Should we define other penalties here?
+ * e.g. Dirty line eviction = 2 clk penality
+ *      load w/ dirty line eviction = miss_delay + 2 clks
+ *      new load evicting clean line = miss_delay
+ */
+
+
 
 void print_usage()
 {
