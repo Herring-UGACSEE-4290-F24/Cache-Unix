@@ -11,9 +11,19 @@ typedef struct
     int data;
 } CacheBlock;
 
+typedef struct
+{
+    int tagWidth;
+    int indexWidth;
+    int offsetWidth;
+} AddressWidths;
+
 // Given an address and a start and end index, returns a long that represents the bits in the given
 // start and end point
 long parseAddress(long addr, uint8_t start, uint8_t end);
+
+
+AddressWidths getAddressWidths(long addr, int totalWidth, int cacheSize, int blockSize, int associativity);
 
 // Calculates how many rows needed in the 2D array
 int getCacheRows(int cacheSize_kb, int blockSize_b);

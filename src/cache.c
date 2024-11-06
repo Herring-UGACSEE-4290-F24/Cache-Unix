@@ -72,21 +72,25 @@ int main(int argc, char *argv[])
     }
   }
 
+  
   int cacheRows = getCacheRows(cachesize_kb, blocksize_bytes);
-
+  
+  // Direct Mapped Cache
+  CacheBlock directCache[cacheRows][1];
+  
   // Initialize cache
-  CacheBlock cache[cacheRows][associativity];
+  // CacheBlock cache[cacheRows][associativity];
 
   // Set default cache values
   for (size_t i = 0; i < cacheRows; i++)
   {
     for (size_t j = 0; j < associativity; j++)
     {
-      cache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
-      cache[i][j].tag = 0;
-      cache[i][j].data = 0;
+      directCache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
+      directCache[i][j].tag = 0;
+      directCache[i][j].data = 0;
     }
-  }  
+  } 
 
   // print out cache configuration
   printf("Cache parameters:\n");

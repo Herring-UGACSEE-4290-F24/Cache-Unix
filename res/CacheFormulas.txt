@@ -1,0 +1,3 @@
+Offset width = log_2(block_size)
+Index width = log_2(cache_size / block_size / associativity)
+Tag width = address_width - ? - block_size
