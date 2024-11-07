@@ -3,6 +3,8 @@
 #include "stdlib.h"
 #include "math.h"
 
+#define ADDR_BIT_LENGTH 32 // Length of each trace address
+
 // Initial struct for each block of the cache
 typedef struct 
 {
@@ -22,8 +24,8 @@ typedef struct
 // start and end point
 long parseAddress(long addr, uint8_t start, uint8_t end);
 
-
-AddressWidths getAddressWidths(long addr, int totalWidth, int cacheSize, int blockSize, int associativity);
+// Calculates the address widths given the initial parameters
+AddressWidths getAddressWidths(long addr, int cacheSize, int blockSize, int associativity);
 
 // Calculates how many rows needed in the 2D array
 int getCacheRows(int cacheSize_kb, int blockSize_b);
