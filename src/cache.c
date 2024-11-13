@@ -132,7 +132,6 @@ int main(int argc, char *argv[])
     {
       directCache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
       directCache[i][j].tag = 0;
-      directCache[i][j].data = 0;
     }
   } 
 
@@ -153,6 +152,7 @@ int main(int argc, char *argv[])
     if (i < 10)
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
+
       i++;
     }
     else

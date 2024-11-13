@@ -10,7 +10,6 @@ typedef struct
 {
     int valid;
     int tag;
-    int data;
 } CacheBlock;
 
 typedef struct
