@@ -16,7 +16,7 @@ AddressWidths getAddressWidths(long addr, int cacheSize, int blockSize, int asso
   return aWidth;
 }
 
-int getCacheRows(int cacheSize_kb, int blockSize_b) // Suggestion: Change this to getNumBlocks
+int getCacheBlocks(int cacheSize_kb, int blockSize_b) // Suggestion: Change this to getNumBlocks
 {
   return (cacheSize_kb * 1024) / blockSize_b;
 }

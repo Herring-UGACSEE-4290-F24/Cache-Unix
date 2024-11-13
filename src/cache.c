@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
 
   int i = 0;
   int j = 1;
+
   // Process the command line arguments
   // Process the command line arguments
   while (j < argc)
@@ -108,20 +109,25 @@ int main(int argc, char *argv[])
   }
 
   
-  int cacheRows = getCacheRows(cachesize_kb, blocksize_bytes);
+  int cacheBlocks = getCacheBlocks(cachesize_kb, blocksize_bytes);
   // ^ this value is the amount of blocks in the cache
   // Rows would be determined with Blocks/Associativity
   
   // Direct Mapped Cache
-  CacheBlock directCache[cacheRows][1];
+  CacheBlock directCache[cacheBlocks][1];
   
   // Initialize cache
-  // CacheBlock cache[cacheRows][associativity];
+  // CacheBlock cache[cacheBlocks / associativity][associativity];
   // : change to cache[blocks/associativity][associativity]
+
+  int cacheRows = cacheBlocks / associativity;
+
+  int rowCount = 0;
 
   // Set default cache values
   for (size_t i = 0; i < cacheRows; i++)
   {
+    rowCount++;
     for (size_t j = 0; j < associativity; j++)
     {
       directCache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
@@ -129,6 +135,8 @@ int main(int argc, char *argv[])
       directCache[i][j].data = 0;
     }
   } 
+
+  printf("Row Count: %d\n", rowCount);
 
   // print out cache configuration
   printf("Cache parameters:\n");
@@ -149,7 +157,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-      return 1;
+      //return 0;
+      break;
     }
 
     // here is where you will want to process your memory accesses
