@@ -1,0 +1,3 @@
+Defines the Naming Conventions for Variables and Functions for Cache Project
+1. Camel Case: lower case first word, upper case every other word w/ no underscores
+    e.g. camelCaseIsFun
