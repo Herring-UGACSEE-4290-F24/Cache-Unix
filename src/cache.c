@@ -109,12 +109,15 @@ int main(int argc, char *argv[])
 
   
   int cacheRows = getCacheRows(cachesize_kb, blocksize_bytes);
+  // ^ this value is the amount of blocks in the cache
+  // Rows would be determined with Blocks/Associativity
   
   // Direct Mapped Cache
   CacheBlock directCache[cacheRows][1];
   
   // Initialize cache
   // CacheBlock cache[cacheRows][associativity];
+  // : change to cache[blocks/associativity][associativity]
 
   // Set default cache values
   for (size_t i = 0; i < cacheRows; i++)
