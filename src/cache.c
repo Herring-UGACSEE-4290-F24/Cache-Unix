@@ -119,7 +119,6 @@ int main(int argc, char *argv[])
   
   // Initialize cache
   // CacheBlock cache[cacheBlocks / associativity][associativity];
-  // : change to cache[blocks/associativity][associativity]
 
   int cacheRows = cacheBlocks / associativity;
 

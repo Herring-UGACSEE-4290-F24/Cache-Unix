@@ -2,8 +2,9 @@
 
 long parseAddress(long addr, uint8_t start, uint8_t end)
 {
-  unsigned long mask = ((1UL << (end - start + 1)) - 1) << (start - 1);
-  return (addr & mask) >> (start - 1);
+  uint8_t length = end - start + 1;                             // uint8_t = "unsigned int "
+  unsigned long mask = ((1UL << (length)) - 1) << (start - 1);  // generates a mask of 1's at the bit posistions being fetched
+  return (addr & mask) >> (start - 1);                          // returns the fetched bits after shifted to the LSB positions
 }
 
 AddressWidths getAddressWidths(long addr, int cacheSize, int blockSize, int associativity)
