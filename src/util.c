@@ -8,12 +8,12 @@ long parseAddress(long addr, uint8_t start, uint8_t end)
 
 AddressWidths getAddressWidths(long addr, int cacheSize, int blockSize, int associativity)
 {
-  AddressWidths aWidth;
-  aWidth.indexWidth = log2(cacheSize / blockSize / associativity);
-  aWidth.offsetWidth = log2(blockSize);
-  aWidth.tagWidth = ADDR_BIT_LENGTH - (aWidth.offsetWidth + aWidth.indexWidth);
+  AddressWidths addrWidth;
+  addrWidth.indexWidth = log2(cacheSize / blockSize / associativity);
+  addrWidth.offsetWidth = log2(blockSize);
+  addrWidth.tagWidth = ADDR_BIT_LENGTH - (addrWidth.offsetWidth + addrWidth.indexWidth);
 
-  return aWidth;
+  return addrWidth;
 }
 
 int getCacheBlocks(int cacheSize_kb, int blockSize_b) // Suggestion: Change this to getNumBlocks
