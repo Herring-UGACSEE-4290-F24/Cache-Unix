@@ -22,20 +22,20 @@ float clockRate = 2;      // Clock speed in GHz
  * Additional Intitial Params (for devising performance metrics of cache)
  * 
  */
-int total_instructions;
-int total_cycles;
-int execution_time;             // i.e. total CPU time
-int memory_accesses;
-double overall_miss_rate;       // percentatge?
-double overall_read_miss_rate;  
-int memory_cpi;                 // what is this?
-int total_cpi;
-int avg_mem_access_time;     // unit defined as number of cycles
-int dirty_evictions;
-int load_misses;
-int store_misses;
-int load_hits;
-int store__hits;
+int total_instructions = 0;
+int total_cycles = 0;
+int execution_time = 0;             // i.e. total CPU time
+int memory_accesses = 0;            // would this be for both load and store or just load?
+double overall_miss_rate = 0;       // percentatge?
+double overall_read_miss_rate = 0;  
+int memory_cpi = 0;                 // what is this?
+int total_cpi = 0;
+int avg_mem_access_time = 0;        // unit defined as number of cycles
+int dirty_evictions = 0;
+int load_misses = 0;
+int store_misses = 0;
+int load_hits = 0;
+int store__hits = 0;
 
 /*
  * Should we define other penalties here?
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
   }
 
   
-  int cacheBlocks = getCacheBlocks(cachesize_kb, blocksize_bytes);
+  int cacheBlocks = getTotalCacheBlocks(cachesize_kb, blocksize_bytes);
   // ^ this value is the amount of blocks in the cache
   // Rows would be determined with Blocks/Associativity
   
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
   {
     // Code to print out just the first 10 addresses.  You'll want to delete
     // this part once you get things going.
-    if (i < 10)
+    /*if (i < 10)
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
@@ -159,9 +159,12 @@ int main(int argc, char *argv[])
     {
       //return 0;
       break;
-    }
+    }*/
 
     // here is where you will want to process your memory accesses
+
+    total_instructions += icount;
+    memory_accesses++;
   }
   // Here is where you want to print out stats
   printf("Lines found = %i \n", i);
@@ -170,19 +173,18 @@ int main(int argc, char *argv[])
   //  print statements are provided, just replace the question marks with
   //  your calcuations.
 
-  /*
-  printf("\texecution time %ld cycles\n", ?);
-  printf("\tinstructions %ld\n", ?);
-  printf("\tmemory accesses %ld\n", ?);
-  printf("\toverall miss rate %.2f\n", ? );
-  printf("\tread miss rate %.2f\n", ? );
-  printf("\tmemory CPI %.2f\n", ?);
-  printf("\ttotal CPI %.2f\n", ?);
-  printf("\taverage memory access time %.2f cycles\n",  ?);
-  printf("dirty evictions %d\n", ?);
-  printf("load_misses %d\n", ?);
-  printf("store_misses %d\n", ?);
-  printf("load_hits %d\n", ?);
-  printf("store_hits %d\n", ?);
-  */
+  
+  //printf("\texecution time %ld cycles\n", ?);
+  printf("\tinstructions:    %d\n", total_instructions);
+  printf("\tmemory accesses: %d\n", memory_accesses);
+  //printf("\toverall miss rate %.2f\n", ? );
+  //printf("\tread miss rate %.2f\n", ? );
+  //printf("\tmemory CPI %.2f\n", ?);
+  //printf("\ttotal CPI %.2f\n", ?);
+  //printf("\taverage memory access time %.2f cycles\n",  ?);
+  //printf("dirty evictions %d\n", ?);
+  //printf("load_misses %d\n", ?);
+  //printf("store_misses %d\n", ?);
+  //printf("load_hits %d\n", ?);
+  //printf("store_hits %d\n", ?);
 }

@@ -28,7 +28,7 @@ long parseAddress(long addr, uint8_t start, uint8_t end);
 AddressWidths getAddressWidths(long addr, int cacheSize, int blockSize, int associativity);
 
 // Calculates how many blocks in the 2D array
-int getCacheBlocks(int cacheSize_kb, int blockSize_b);
+int getTotalCacheBlocks(int cacheSize_kb, int blockSize_b);
 
 // For direct mapped associativity, used to get location for storage
 long getBlockAddressDirect(long addr, int blockSizeBytes);
