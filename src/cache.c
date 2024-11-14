@@ -15,6 +15,7 @@ int associativity = 2;    // Associativity of cache
 int blocksize_bytes = 32; // Cache Block size in bytes
 int cachesize_kb = 64;    // Cache size in KB
 int miss_penalty = 30;
+float clockRate = 2;      // Clock speed in GHz
 
 /*
  *
