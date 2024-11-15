@@ -122,20 +122,15 @@ int main(int argc, char *argv[])
 
   int cacheRows = cacheBlocks / associativity;
 
-  int rowCount = 0;
-
   // Set default cache values
   for (size_t i = 0; i < cacheRows; i++)
   {
-    rowCount++;
     for (size_t j = 0; j < associativity; j++)
     {
       directCache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
       directCache[i][j].tag = 0;
     }
   } 
-
-  printf("Row Count: %d\n", rowCount);
 
   // print out cache configuration
   printf("Cache parameters:\n");
@@ -149,17 +144,17 @@ int main(int argc, char *argv[])
   {
     // Code to print out just the first 10 addresses.  You'll want to delete
     // this part once you get things going.
-    /*if (i < 10)
+    if (i < 10)
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
       i++;
-    }
+    } 
     else
     {
       //return 0;
       break;
-    }*/
+    }
 
     // here is where you will want to process your memory accesses
 
