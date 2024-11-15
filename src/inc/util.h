@@ -10,6 +10,7 @@ typedef struct
 {
     int valid;
     int tag;
+    int LRU;
 } CacheBlock;
 
 // Struct that represents the bit widths for the given address
