@@ -25,7 +25,7 @@ float clockRate = 2;      // Clock speed in GHz
 int total_instructions = 0;
 int total_cycles = 0;
 int execution_time = 0;             // i.e. total CPU time
-int memory_accesses = 0;            // would this be for both load and store or just load?
+int memory_accesses = 0;            
 double overall_miss_rate = 0;       // percentatge?
 double overall_read_miss_rate = 0;  
 int memory_cpi = 0;                 // what is this?
@@ -35,7 +35,7 @@ int dirty_evictions = 0;
 int load_misses = 0;
 int store_misses = 0;
 int load_hits = 0;
-int store__hits = 0;
+int store_hits = 0;
 
 /*
  * Should we define other penalties here?
@@ -122,6 +122,8 @@ int main(int argc, char *argv[])
 
   int cacheRows = cacheBlocks / associativity;
 
+  printf("Total Cache Rows: %d\n", cacheRows);
+
   // Set default cache values
   for (size_t i = 0; i < cacheRows; i++)
   {
@@ -155,6 +157,42 @@ int main(int argc, char *argv[])
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
+      // If errors - tag: 15, 32    index: 5, 14
+      long tag = parseAddress(address, 32 - addrWidth.tagWidth + 1, 32);
+      long index = parseAddress(address, addrWidth.offsetWidth + 1, addrWidth.offsetWidth + addrWidth.indexWidth);
+
+      printf("\t\t-Tag:   %ld\n", tag);
+      printf("\t\t-Index: %ld\n", index);
+
+      if (directCache[index][0].tag != tag) 
+      {
+        printf("\t\t-MISS\n");
+        directCache[index][0].tag = tag;
+        directCache[index][0].valid = 1;
+
+        if (loadstore) 
+        {
+          store_misses++;
+        } 
+        else 
+        {
+          load_misses++;
+        }
+      } 
+      else if (directCache[index][0].tag == tag)
+      {
+        printf("\t\t-HIT\n");
+
+        if (loadstore) 
+        {
+          store_hits++;
+        }
+        else
+        {
+          load_hits++;
+        }
+      }
+
       i++;
     } 
     else
@@ -185,8 +223,8 @@ int main(int argc, char *argv[])
   //printf("\ttotal CPI %.2f\n", ?);
   //printf("\taverage memory access time %.2f cycles\n",  ?);
   //printf("dirty evictions %d\n", ?);
-  //printf("load_misses %d\n", ?);
-  //printf("store_misses %d\n", ?);
-  //printf("load_hits %d\n", ?);
-  //printf("store_hits %d\n", ?);
+  printf("\tload_misses:     %d\n", load_misses);
+  printf("\tstore_misses:    %d\n", store_misses);
+  printf("\tload_hits:       %d\n", load_hits);
+  printf("\tstore_hits:      %d\n", store_hits);
 }
