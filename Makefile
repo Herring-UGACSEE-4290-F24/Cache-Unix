@@ -10,16 +10,16 @@ EXE=$(notdir $(FILE)).out
 
 # If the first argument is "run"...
 ifeq (run,$(firstword $(MAKECMDGOALS)))
-	# use the first as argument for gunzip, making sure to set a default of 'art'
-	ifeq (,$(word 2, $(MAKECMDGOALS)))
-		TRACE := art
-	else
+  # use the first as argument for gunzip, making sure to set a default of 'art'
+  ifeq (,$(word 2, $(MAKECMDGOALS)))
+  	TRACE := art
+  else
 	TRACE := $(word 2, $(MAKECMDGOALS))
-	endif
-	# use the rest as arguments for cachesim
-	CACHE_ARGS := $(wordlist 3,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-	# ...and turn them into do-nothing targets
-	$(eval $(RUN_ARGS):;@:)
+  endif
+  # use the rest as arguments for cachesim
+  CACHE_ARGS := $(wordlist 3,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
 endif
 
 build:

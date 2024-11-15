@@ -133,6 +133,12 @@ int main(int argc, char *argv[])
     }
   } 
 
+  AddressWidths addrWidth = getAddressWidths(cachesize_kb * 1024, blocksize_bytes, associativity);
+
+  printf("Index Width:  %d\n", addrWidth.indexWidth);
+  printf("Offset Width: %d\n", addrWidth.offsetWidth);
+  printf("Tag Width:    %d\n", addrWidth.tagWidth);
+
   // print out cache configuration
   printf("Cache parameters:\n");
   printf("Cache Size (KB)\t\t\t%d\n", cachesize_kb);

@@ -26,7 +26,7 @@ typedef struct
 long parseAddress(long addr, uint8_t start, uint8_t end);
 
 // Calculates the address widths given the initial parameters
-AddressWidths getAddressWidths(long addr, int cacheSize, int blockSize, int associativity);
+AddressWidths getAddressWidths(int cacheSizeBytes, int blockSizeBytes, int associativity);
 
 // Calculates how many blocks in the 2D array
 int getTotalCacheBlocks(int cacheSize_kb, int blockSize_b);

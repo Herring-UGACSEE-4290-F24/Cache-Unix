@@ -7,11 +7,11 @@ long parseAddress(long addr, uint8_t start, uint8_t end)
   return (addr & mask) >> (start - 1);                          // returns the fetched bits after shifted to the LSB positions
 }
 
-AddressWidths getAddressWidths(long addr, int cacheSize, int blockSize, int associativity)
+AddressWidths getAddressWidths(int cacheSizeBytes, int blockSizeBytes, int associativity)
 {
   AddressWidths addrWidth;
-  addrWidth.indexWidth = log2(cacheSize / blockSize / associativity);
-  addrWidth.offsetWidth = log2(blockSize);
+  addrWidth.indexWidth = (int)log2(cacheSizeBytes / blockSizeBytes / associativity);
+  addrWidth.offsetWidth = (int)log2(blockSizeBytes);
   addrWidth.tagWidth = ADDR_BIT_LENGTH - (addrWidth.offsetWidth + addrWidth.indexWidth);
 
   return addrWidth;
