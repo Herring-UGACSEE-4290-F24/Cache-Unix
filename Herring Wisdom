@@ -1,0 +1,17 @@
+Parts of the trace:
+    OFFSET: Practically means nothing, this would be for selecting a 
+            byte of data in a block BUT we  don't  care  about data.
+
+    INDEX : Indicates which ROW you are checking values in! With  an 
+            associativity > 1, you WILL be checking multiple  values 
+            all in the SAME row!
+
+    TAG   : VERY IMPORTANT -> this is the value that  is  stored  at 
+            the index. When the value is not there, it  is  a  MISS, 
+            when it is there, it is a HIT. (make sure to also  check 
+            the dirty bit). Note: you also have to check multiple of
+            the same row when there is associativity, and that means
+            that a miss will change one of the values, and the  LRU,
+            decides which.
+
+    LRU   : Number of bits will be log2(Associativity).
