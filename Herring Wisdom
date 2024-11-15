@@ -15,3 +15,11 @@ Parts of the trace:
             decides which.
 
     LRU   : Number of bits will be log2(Associativity).
+
+Valid Bit:
+    This is DIFFERENT from the dirty bit.
+    This bit shows that  the  data  present  in  a  block  has  been 
+    written, or just left-over useless data. In the event of useless
+    (valid = 0), any access is immediately a  miss!  This  also  has 
+    implications with associativity because this bit  can  help  you 
+    determine which victim to evict.
