@@ -2,6 +2,7 @@
 
 #include "stdlib.h"
 #include "math.h"
+#include <stdint.h>
 
 #define ADDR_BIT_LENGTH 32 // Length of each trace address
 

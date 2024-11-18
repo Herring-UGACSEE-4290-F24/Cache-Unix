@@ -1,4 +1,5 @@
 #include "inc/util.h"
+#include <stdint.h>
 
 long parseAddress(long addr, uint8_t start, uint8_t end)
 {
@@ -10,8 +11,8 @@ long parseAddress(long addr, uint8_t start, uint8_t end)
 AddressWidths getAddressWidths(int cacheSizeBytes, int blockSizeBytes, int associativity)
 {
   AddressWidths addrWidth;
-  addrWidth.indexWidth = (int)log2(cacheSizeBytes / blockSizeBytes / associativity);
-  addrWidth.offsetWidth = (int)log2(blockSizeBytes);
+  addrWidth.indexWidth = (int) log2(cacheSizeBytes / blockSizeBytes / associativity);
+  addrWidth.offsetWidth = (int) log2(blockSizeBytes);
   addrWidth.tagWidth = ADDR_BIT_LENGTH - (addrWidth.offsetWidth + addrWidth.indexWidth);
 
   return addrWidth;
