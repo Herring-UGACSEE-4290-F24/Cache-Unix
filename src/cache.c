@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
   {
     // Code to print out just the first 10 addresses.  You'll want to delete
     // this part once you get things going.
-    if (i < 10)
+    if (1) // swap "i < 10" to "1" for full test
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
@@ -163,8 +163,8 @@ int main(int argc, char *argv[])
       printf("\t\t-Tag:   %ld\n", tag);
       printf("\t\t-Index: %ld\n", index);
 
-      if (directCache[index][0].tag != tag) 
-      {
+      if (directCache[index][0].tag != tag || directCache[index][0].valid == 0) 
+      { // when tag doesn't match or index is invalid
         printf("\t\t-MISS\n");
         directCache[index][0].tag = tag;
         directCache[index][0].valid = 1;
@@ -179,7 +179,7 @@ int main(int argc, char *argv[])
         }
       } 
       else if (directCache[index][0].tag == tag)
-      {
+      { // when tag matches
         printf("\t\t-HIT\n");
 
         if (loadstore) 
@@ -205,6 +205,11 @@ int main(int argc, char *argv[])
     total_instructions += icount;
     memory_accesses++;
   }
+  // Processing Stats:
+  overall_miss_rate = (load_misses + store_misses) / (double) memory_accesses;
+  overall_read_miss_rate = load_misses / (double) (load_misses + load_hits);
+  total_cycles += total_instructions;
+
   // Here is where you want to print out stats
   printf("Lines found = %i \n", i);
   printf("Simulation results:\n");
@@ -212,18 +217,17 @@ int main(int argc, char *argv[])
   //  print statements are provided, just replace the question marks with
   //  your calcuations.
 
-  
   //printf("\texecution time %ld cycles\n", ?);
-  printf("\tinstructions:    %d\n", total_instructions);
-  printf("\tmemory accesses: %d\n", memory_accesses);
-  //printf("\toverall miss rate %.2f\n", ? );
-  //printf("\tread miss rate %.2f\n", ? );
+  printf("\tinstructions:     %d\n", total_instructions);
+  printf("\tmemory accesses:  %d\n", memory_accesses);
+  printf("\toverall miss rate %.2f\n", overall_miss_rate);
+  printf("\tread miss rate    %.2f\n", overall_read_miss_rate);
   //printf("\tmemory CPI %.2f\n", ?);
   //printf("\ttotal CPI %.2f\n", ?);
   //printf("\taverage memory access time %.2f cycles\n",  ?);
   //printf("dirty evictions %d\n", ?);
-  printf("\tload_misses:     %d\n", load_misses);
-  printf("\tstore_misses:    %d\n", store_misses);
-  printf("\tload_hits:       %d\n", load_hits);
-  printf("\tstore_hits:      %d\n", store_hits);
+  printf("\tload_misses:      %d\n", load_misses);
+  printf("\tstore_misses:     %d\n", store_misses);
+  printf("\tload_hits:        %d\n", load_hits);
+  printf("\tstore_hits:       %d\n", store_hits);
 }
