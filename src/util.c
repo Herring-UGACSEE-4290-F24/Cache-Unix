@@ -17,6 +17,20 @@ int log_2(int value) // Should be decently self-explainatory
     return 6;
   } else if (value == 128) {
     return 7;
+  } else if (value == 256) {
+    return 8;
+  } else if (value == 512) {
+    return 9;
+  } else if (value == 1024) {
+    return 10;
+  } else if (value == 2048) {
+    return 11;
+  } else if (value == 4096) {
+    return 12;
+  } else if (value == 8192) {
+    return 13;
+  } else if (value == 16384) {
+    return 14;
   } else {
     return -1;
     // will need to add more if surpasing this amount
