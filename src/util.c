@@ -29,8 +29,6 @@ int log_2(int value) // Should be decently self-explainatory
     return 12;
   } else if (value == 8192) {
     return 13;
-  } else if (value == 16384) {
-    return 14;
   } else {
     return -1;
     // will need to add more if surpasing this amount
