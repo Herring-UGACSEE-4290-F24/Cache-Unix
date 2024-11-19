@@ -23,6 +23,10 @@ typedef struct
     int offsetWidth;
 } AddressWidths;
 
+// Lookup function for log with base 2 since Jake's computer
+// won't run the built in one
+int log_2(int value);
+
 // Given an address and a start and end index, returns a long that represents the bits in the given
 // start and end point
 long parseAddress(long addr, uint8_t start, uint8_t end);
