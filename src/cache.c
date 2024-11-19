@@ -218,16 +218,16 @@ int main(int argc, char *argv[])
   //  your calcuations.
 
   //printf("\texecution time %ld cycles\n", ?);
-  printf("\tinstructions:     %d\n", total_instructions);
-  printf("\tmemory accesses:  %d\n", memory_accesses);
-  printf("\toverall miss rate %.2f\n", overall_miss_rate);
-  printf("\tread miss rate    %.2f\n", overall_read_miss_rate);
+  printf("\tinstructions:      %d\n", total_instructions);
+  printf("\tmemory accesses:   %d\n", memory_accesses);
+  printf("\toverall miss rate: %.2f\n", overall_miss_rate);
+  printf("\tread miss rate:    %.2f\n", overall_read_miss_rate);
   //printf("\tmemory CPI %.2f\n", ?);
   //printf("\ttotal CPI %.2f\n", ?);
   //printf("\taverage memory access time %.2f cycles\n",  ?);
   //printf("dirty evictions %d\n", ?);
-  printf("\tload_misses:      %d\n", load_misses);
-  printf("\tstore_misses:     %d\n", store_misses);
-  printf("\tload_hits:        %d\n", load_hits);
-  printf("\tstore_hits:       %d\n", store_hits);
+  printf("\tload_misses:       %d\n", load_misses);
+  printf("\tstore_misses:      %d\n", store_misses);
+  printf("\tload_hits:         %d\n", load_hits);
+  printf("\tstore_hits:        %d\n", store_hits);
 }
