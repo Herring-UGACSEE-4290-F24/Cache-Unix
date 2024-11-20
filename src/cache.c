@@ -131,6 +131,7 @@ int main(int argc, char *argv[])
       directCache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
       directCache[i][j].tag = 0;
       directCache[i][j].LRU = 0;
+      directCache[i][j].dirty = 0;
     }
   } 
 
@@ -169,9 +170,17 @@ int main(int argc, char *argv[])
         directCache[index][0].tag = tag;
         directCache[index][0].valid = 1;
 
+        if (directCache[index][0].dirty) {
+          // NEED TO WRITE-BACK
+          // "Dirty eviction"
+          dirty_evictions++;
+          directCache[index][0].dirty = 0;
+        }
+
         if (loadstore) 
         {
           store_misses++;
+          directCache[index][0].dirty = 1;
         } 
         else 
         {
@@ -185,6 +194,7 @@ int main(int argc, char *argv[])
         if (loadstore) 
         {
           store_hits++;
+          directCache[index][0].dirty = 1;
         }
         else
         {
@@ -225,7 +235,7 @@ int main(int argc, char *argv[])
   //printf("\tmemory CPI     %.2f\n", ?);
   //printf("\ttotal CPI      %.2f\n", ?);
   //printf("\taverage memory access time %.2f cycles\n",  ?);
-  //printf("dirty evictions  %d\n", ?);
+  printf("\tdirty evictions:   %d\n", dirty_evictions);
   printf("\tload_misses:       %d\n", load_misses);
   printf("\tstore_misses:      %d\n", store_misses);
   printf("\tload_hits:         %d\n", load_hits);
