@@ -22,14 +22,15 @@ float clockRate = 2;      // Clock speed in GHz
  * 
  */
 int total_instructions = 0;
-int total_cycles = 0;
+long int total_cycles = 0;
+long int mem_cycles = 0;            // How many cycles memory instructions take
 int execution_time = 0;             // i.e. total CPU time
 int memory_accesses = 0;            
 double overall_miss_rate = 0;       // percentatge?
 double overall_read_miss_rate = 0;  
-int memory_cpi = 0;                 // what is this?
-int total_cpi = 0;
-int avg_mem_access_time = 0;        // unit defined as number of cycles
+double memory_cpi = 0;                 // what is this?
+double total_cpi = 0;
+double avg_mem_access_time = 0;        // unit defined as number of cycles
 int dirty_evictions = 0;
 int load_misses = 0;
 int store_misses = 0;
@@ -170,8 +171,11 @@ int main(int argc, char *argv[])
         directCache[index][0].tag = tag;
         directCache[index][0].valid = 1;
 
+        mem_cycles += miss_penalty;
+
         if (directCache[index][0].dirty) {
           // NEED TO WRITE-BACK
+          mem_cycles += 2;
           // "Dirty eviction"
           dirty_evictions++;
           directCache[index][0].dirty = 0;
@@ -218,7 +222,10 @@ int main(int argc, char *argv[])
   // Processing Stats:
   overall_miss_rate = (load_misses + store_misses) / (double) memory_accesses;
   overall_read_miss_rate = load_misses / (double) (load_misses + load_hits);
-  total_cycles += total_instructions;
+  total_cycles = total_instructions + mem_cycles;
+  avg_mem_access_time = mem_cycles / (double) memory_accesses;
+  memory_cpi = mem_cycles / (double) total_instructions;
+  total_cpi = total_cycles / (double) total_instructions;
 
   // Here is where you want to print out stats
   printf("Lines found = %i \n", i);
@@ -227,14 +234,14 @@ int main(int argc, char *argv[])
   //  print statements are provided, just replace the question marks with
   //  your calcuations.
 
-  //printf("\texecution time %ld cycles\n", ?);
+  printf("\texecution time:    %ld cycles\n", total_cycles);
   printf("\tinstructions:      %d\n", total_instructions);
   printf("\tmemory accesses:   %d\n", memory_accesses);
   printf("\toverall miss rate: %.2f\n", overall_miss_rate);
   printf("\tread miss rate:    %.2f\n", overall_read_miss_rate);
-  //printf("\tmemory CPI     %.2f\n", ?);
-  //printf("\ttotal CPI      %.2f\n", ?);
-  //printf("\taverage memory access time %.2f cycles\n",  ?);
+  printf("\tmemory CPI         %.2f\n", memory_cpi);
+  printf("\ttotal CPI          %.2f\n", total_cpi);
+  printf("\taverage memory access time: %.2f cycles\n",  avg_mem_access_time);
   printf("\tdirty evictions:   %d\n", dirty_evictions);
   printf("\tload_misses:       %d\n", load_misses);
   printf("\tstore_misses:      %d\n", store_misses);
