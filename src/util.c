@@ -3,36 +3,12 @@
 
 int log_2(int value) // Should be decently self-explainatory
 {
-  if (value == 2) {
-    return 1;
-  } else if (value == 4) {
-    return 2;
-  } else if (value == 8) {
-    return 3;
-  } else if (value == 16) {
-    return 4;
-  } else if (value == 32) {
-    return 5;
-  } else if (value == 64) {
-    return 6;
-  } else if (value == 128) {
-    return 7;
-  } else if (value == 256) {
-    return 8;
-  } else if (value == 512) {
-    return 9;
-  } else if (value == 1024) {
-    return 10;
-  } else if (value == 2048) {
-    return 11;
-  } else if (value == 4096) {
-    return 12;
-  } else if (value == 8192) {
-    return 13;
-  } else {
-    return -1;
-    // will need to add more if surpasing this amount
+  int count = 0;
+  while (value != 1) {
+    value = (value >> 1);
+    count++;
   }
+  return count;
 }
 
 long parseAddress(long addr, uint8_t start, uint8_t end)
