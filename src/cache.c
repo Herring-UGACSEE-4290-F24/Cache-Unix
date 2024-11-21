@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
   {
     // Code to print out just the first 10 addresses.  You'll want to delete
     // this part once you get things going.
-    if (1) // swap "i < 10" to "1" for full test
+    if (i < 10) // swap "i < 10" to "1" for full test
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
