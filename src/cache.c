@@ -11,10 +11,10 @@
  */
 
 int associativity = 1;    // Associativity of cache
-int blocksize_bytes = 16; // Cache Block size in bytes
+int blocksize_bytes = 32; // Cache Block size in bytes
 int cachesize_kb = 16;    // Cache size in KB
-int miss_penalty = 30;
-float clockRate = 2;      // Clock speed in GHz
+int miss_penalty = 30;    // This won't be getting updated (need to change clockRate to affect this)
+float clockRate = 2.667;      // Clock speed in GHz
 
 /*
  *
@@ -59,6 +59,26 @@ void print_usage()
 
 int main(int argc, char *argv[])
 {
+
+  miss_penalty = clockRate * 15;
+  switch (blocksize_bytes)
+  {
+  case 32:
+    miss_penalty += 2;
+    break;
+  
+  case 64:
+    miss_penalty += 6;
+    break;
+
+  case 128:
+    miss_penalty += 14;
+    break;
+
+  default:
+    miss_penalty += 0;
+    break;
+  }
 
   long address;
   int loadstore, icount;
