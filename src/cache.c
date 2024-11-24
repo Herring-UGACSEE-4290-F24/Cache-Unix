@@ -39,46 +39,26 @@ int store_hits = 0;                 // hits on store instructions
 
 void print_usage()
 {
-  printf("Usage: gunzip2 -c <tracefile> | ./cache -a <assoc> -l <blksz> -s <size> -mp <mispen>\n");
+  printf("Usage: gunzip2 -c <tracefile> | ./cache -a <assoc> -l <blksz> -s <size> -c <clkspd>\n");
   printf("  <tracefile>: The memory trace file\n");
   printf("  -a <assoc>: The associativity of the cache\n");
   printf("  -l <blksz>: The blocksize (in bytes) of the cache\n");
   printf("  -s <size>: The size (in KB) of the cache\n");
-  printf("  -mp <mispen>: The miss penalty (in cycles) of a miss\n");
+  printf("  -c <clkspd>: The speed of the clock (in GHz)\n");
   exit(0);
 }
 
 int main(int argc, char *argv[])
 {
 
-  miss_penalty = clockRate * 15;
-  switch (blocksize_bytes)
-  {
-  case 32:
-    miss_penalty += 2;
-    break;
-  
-  case 64:
-    miss_penalty += 6;
-    break;
+  long address;     // The address being passed in by the trace       
+  int loadstore;    // Whether the mem instruction is a load (0) or store (1)
+  int icount;       // Instruction count - number of instructions executed
+  char marker;      // Char that denotes the start of a trace line
 
-  case 128:
-    miss_penalty += 14;
-    break;
+  int i = 0;        // Iterator for the trace lines
+  int j = 1;        // Iterator to scan the arguments passed in on the terminal
 
-  default:
-    miss_penalty += 0;
-    break;
-  }
-
-  long address;
-  int loadstore, icount;
-  char marker;
-
-  int i = 0;
-  int j = 1;
-
-  // Process the command line arguments
   // Process the command line arguments
   while (j < argc)
   {
@@ -106,12 +86,12 @@ int main(int argc, char *argv[])
       cachesize_kb = atoi(argv[j]);
       j++;
     }
-    else if (strcmp("-mp", argv[j]) == 0)
+    else if (strcmp("-c", argv[j]) == 0)
     {
       j++;
       if (j >= argc)
         print_usage();
-      miss_penalty = atoi(argv[j]);
+      clockRate = atoi(argv[j]);
       j++;
     }
     else
@@ -120,6 +100,25 @@ int main(int argc, char *argv[])
     }
   }
 
+  miss_penalty = clockRate * 15;    // Sets the base miss penalty based on clock speed
+  switch (blocksize_bytes)          // Adds the extra penalty for larger block sizes
+  { 
+  case 32:
+    miss_penalty += 2;
+    break;
+  
+  case 64:
+    miss_penalty += 6;
+    break;
+
+  case 128:
+    miss_penalty += 14;
+    break;
+
+  default:
+    miss_penalty += 0;
+    break;
+  }
   
   int cacheBlocks = getTotalCacheBlocks(cachesize_kb, blocksize_bytes);
   // ^ this value is the amount of blocks in the cache
