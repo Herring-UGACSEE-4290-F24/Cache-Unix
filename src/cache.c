@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 
         // Finds the Least Recently Used associativity value
         for (int a = 0; a < associativity; a++) {
-          if (cache[index][a].LRU > aVal) {
+          if (cache[index][a].LRU > cache[index][aVal].LRU) {
             aVal = a;
           }
         }
