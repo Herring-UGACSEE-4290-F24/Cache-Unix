@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
   {
     // Code to print out just the first 10 addresses.  You'll want to delete
     // this part once you get things going.
-    if (1) // swap "i < 10" to "1" for full test
+    if (i < 10) // swap "i < 10" to "1" for full test
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
@@ -173,7 +173,7 @@ int main(int argc, char *argv[])
       printf("\t\t-Index: %ld\n", index);
 
 
-      char HIT = 0;                   // Whether a HIT was detected or not
+      int HIT = 0;                   // Whether a HIT was detected or not
       int aVal = 0;                   // The associativity location that will be accessed
 
       for (int a = 0; a < associativity; a++) {
@@ -198,9 +198,8 @@ int main(int argc, char *argv[])
         }
 
         // Finds the Least Recently Used associativity value
-        char maxLRU = 0;
         for (int a = 0; a < associativity; a++) {
-          if (cache[index][a].LRU > maxLRU) {
+          if (cache[index][a].LRU > aVal) {
             aVal = a;
           }
         }
