@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
   {
     // Code to print out just the first 10 addresses.  You'll want to delete
     // this part once you get things going.
-    if (i < 10) // swap "i < 10" to "1" for full test
+    if (1) // swap "i < 10" to "1" for full test
     {
       printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
@@ -209,6 +209,13 @@ int main(int argc, char *argv[])
         // Handles the miss
         cache[index][aVal].tag = tag;
         cache[index][aVal].valid = 1;
+
+        // Dirty logic
+        if (cache[index][aVal].dirty) {
+          mem_cycles += 2;
+          dirty_evictions++;
+          cache[index][aVal].dirty = 0;
+        }
       } 
 
       // Adds 1 to all of the LRU values, then resets the value of the block being used 
@@ -216,13 +223,6 @@ int main(int argc, char *argv[])
         cache[index][a].LRU++;
       }
       cache[index][aVal].LRU = 0;
-
-      // Dirty logic
-      if (cache[index][aVal].dirty) {
-        mem_cycles += 2;
-        dirty_evictions++;
-        cache[index][aVal].dirty = 0;
-      }
 
       // All stores make the thang dirty
       if (loadstore) {
