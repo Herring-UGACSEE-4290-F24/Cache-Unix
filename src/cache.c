@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
   // Set default cache values
   for (size_t i = 0; i < cacheRows; i++)
   {
-    for (size_t a = 0; a < associativity; j++)
+    for (size_t a = 0; a < associativity; a++)
     {
       cache[i][a].valid   = 0; // 0 is for invalid, 1 is for valid
       cache[i][a].tag     = 0; // Tag initialized to 0
