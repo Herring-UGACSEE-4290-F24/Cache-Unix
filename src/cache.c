@@ -163,18 +163,18 @@ int main(int argc, char *argv[])
     // this part once you get things going.
     if (1) // swap "i < 10" to "1" for full test
     {
-      printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
+      //printf("\t%c %d %lx %d\n", marker, loadstore, address, icount);
 
       // If errors - tag: 15, 32    index: 5, 14
       long tag = parseAddress(address, 32 - addrWidth.tagWidth + 1, 32);
       long index = parseAddress(address, addrWidth.offsetWidth + 1, addrWidth.offsetWidth + addrWidth.indexWidth);
 
-      printf("\t\t-Tag:   %ld\n", tag);
-      printf("\t\t-Index: %ld\n", index);
+      //printf("\t\t-Tag:   %ld\n", tag);
+      //printf("\t\t-Index: %ld\n", index);
 
 
       int HIT = 0;                   // Whether a HIT was detected or not
-      int aVal = 0;                   // The associativity location that will be accessed
+      int aVal = 0;                  // The associativity location that will be accessed
 
       for (int a = 0; a < associativity; a++) {
         if (cache[index][a].tag == tag && cache[index][a].valid == 1) { // HIT is found
@@ -184,14 +184,14 @@ int main(int argc, char *argv[])
       }
 
       if (HIT) {                      // if a HIT was found ever
-        printf("\t\t-HIT\n");
+        //printf("\t\t-HIT\n");
         if (loadstore) {
           store_hits++;
         } else {
           load_hits++;
         }
       } else {                        // if no HIT was found among all associativities
-        printf("\t\t-MISS\n");
+        //printf("\t\t-MISS\n");
         mem_cycles += miss_penalty;
         if (loadstore) {
           store_misses++;
@@ -228,50 +228,6 @@ int main(int argc, char *argv[])
       if (loadstore) {
         cache[index][aVal].dirty = 1;
       }
-
-    /* OLD CODE
-      if (cache[index][0].tag != tag || cache[index][0].valid == 0) 
-      { // when tag doesn't match or index is invalid
-        printf("\t\t-MISS\n");
-        cache[index][0].tag = tag;
-        cache[index][0].valid = 1;
-
-        mem_cycles += miss_penalty;
-
-        if (cache[index][0].dirty) {
-          // NEED TO WRITE-BACK
-          mem_cycles += 2;
-          // "Dirty eviction"
-          dirty_evictions++;
-          cache[index][0].dirty = 0;
-        }
-
-        if (loadstore) 
-        {
-          store_misses++;
-          cache[index][0].dirty = 1;
-        } 
-        else 
-        {
-          load_misses++;
-        }
-      } 
-      else if (cache[index][0].tag == tag)
-      { // when tag matches
-        printf("\t\t-HIT\n");
-
-        if (loadstore) 
-        {
-          store_hits++;
-          cache[index][0].dirty = 1;
-        }
-        else
-        {
-          load_hits++;
-        }
-      }
-    */
-
 
       i++;
     } 
