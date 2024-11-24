@@ -10,10 +10,10 @@
  * 
  */
 
-int associativity = 1;    // Associativity of cache
-int blocksize_bytes = 32; // Cache Block size in bytes
-int cachesize_kb = 16;    // Cache size in KB
-int miss_penalty = 30;    // This won't be getting updated (need to change clockRate to affect this)
+int associativity = 1;        // Associativity of cache
+int blocksize_bytes = 32;     // Cache Block size in bytes
+int cachesize_kb = 16;        // Cache size in KB
+int miss_penalty = 30;        // This won't be getting updated (need to change clockRate to affect this)
 float clockRate = 2.667;      // Clock speed in GHz
 
 /*
@@ -21,30 +21,21 @@ float clockRate = 2.667;      // Clock speed in GHz
  * Additional Intitial Params (for devising performance metrics of cache)
  * 
  */
-int total_instructions = 0;
-long int total_cycles = 0;
+int total_instructions = 0;         // Number of instructions executed (mem + non-mem)
+long int total_cycles = 0;          // How many total cycles are taken (includes non-mem instructions)
 long int mem_cycles = 0;            // How many cycles memory instructions take
 int execution_time = 0;             // i.e. total CPU time
-int memory_accesses = 0;            
-double overall_miss_rate = 0;       // percentatge?
-double overall_read_miss_rate = 0;  
-double memory_cpi = 0;                 // what is this?
-double total_cpi = 0;
-double avg_mem_access_time = 0;        // unit defined as number of cycles
-int dirty_evictions = 0;
-int load_misses = 0;
-int store_misses = 0;
-int load_hits = 0;
-int store_hits = 0;
-
-/*
- * Should we define other penalties here?
- * e.g. Dirty line eviction = 2 clk penality
- *      load w/ dirty line eviction = miss_delay + 2 clks
- *      new load evicting clean line = miss_delay
- */
-
-
+int memory_accesses = 0;            // number of times memory is accessed
+double overall_miss_rate = 0;       // Percent of miss/toatal access
+double overall_read_miss_rate = 0;  // Percent of read miss / total access
+double memory_cpi = 0;              // mem_cycles/total instructions
+double total_cpi = 0;               // total_cycles/total_instructions
+double avg_mem_access_time = 0;     // unit defined as number of cycles
+int dirty_evictions = 0;            // times that a dirty line is evicted
+int load_misses = 0;                // misses on load instructions
+int store_misses = 0;               // misses on store instructions
+int load_hits = 0;                  // hits on load instructions
+int store_hits = 0;                 // hits on store instructions
 
 void print_usage()
 {
