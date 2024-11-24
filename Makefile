@@ -32,7 +32,7 @@ debug: build
 	$(DEBUGGER) $(EXE)
 
 direct: build
-	gunzip -c traces/art.trace.gz | ./$(EXE) -a 1 -s 16 -l 16 -mp 30
+	gunzip -c traces/art.trace.gz | ./$(EXE) -a 1 -s 16 -l 16 -c 2
 
 clean:
 	rm -rf $(EXE)
