@@ -184,12 +184,14 @@ int main(int argc, char *argv[])
       }
 
       if (HIT) {                      // if a HIT was found ever
+        printf("\t\t-HIT\n");
         if (loadstore) {
           store_hits++;
         } else {
           load_hits++;
         }
       } else {                        // if no HIT was found among all associativities
+        printf("\t\t-MISS\n");
         mem_cycles += miss_penalty;
         if (loadstore) {
           store_misses++;
