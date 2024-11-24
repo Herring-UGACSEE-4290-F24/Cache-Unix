@@ -134,12 +134,12 @@ int main(int argc, char *argv[])
   // Set default cache values
   for (size_t i = 0; i < cacheRows; i++)
   {
-    for (size_t j = 0; j < associativity; j++)
+    for (size_t a = 0; a < associativity; j++)
     {
-      cache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
-      cache[i][j].tag = 0;
-      cache[i][j].LRU = 0;
-      cache[i][j].dirty = 0;
+      cache[i][a].valid   = 0; // 0 is for invalid, 1 is for valid
+      cache[i][a].tag     = 0; // Tag initialized to 0
+      cache[i][a].LRU     = 0; // LRU starts at zero for all associativity
+      cache[i][a].dirty   = 0; // Block is initialized as clean
     }
   } 
 
