@@ -11,10 +11,10 @@
  */
 
 int associativity = 1;        // Associativity of cache
-int blocksize_bytes = 32;     // Cache Block size in bytes
+int blocksize_bytes = 16;     // Cache Block size in bytes
 int cachesize_kb = 16;        // Cache size in KB
 int miss_penalty = 30;        // This won't be getting updated (need to change clockRate to affect this)
-float clockRate = 2.667;      // Clock speed in GHz
+float clockRate = 2;      // Clock speed in GHz
 
 /*
  *
@@ -124,11 +124,8 @@ int main(int argc, char *argv[])
   // ^ this value is the amount of blocks in the cache
   // Rows would be determined with Blocks/Associativity
   
-  // Direct Mapped Cache
-  CacheBlock directCache[cacheBlocks][1];
-  
   // Initialize cache
-  // CacheBlock cache[cacheBlocks / associativity][associativity];
+  CacheBlock cache[cacheBlocks / associativity][associativity];
 
   int cacheRows = cacheBlocks / associativity;
 
@@ -139,10 +136,10 @@ int main(int argc, char *argv[])
   {
     for (size_t j = 0; j < associativity; j++)
     {
-      directCache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
-      directCache[i][j].tag = 0;
-      directCache[i][j].LRU = 0;
-      directCache[i][j].dirty = 0;
+      cache[i][j].valid = 0; // 0 is for invalid, 1 is for valid
+      cache[i][j].tag = 0;
+      cache[i][j].LRU = 0;
+      cache[i][j].dirty = 0;
     }
   } 
 
@@ -175,40 +172,40 @@ int main(int argc, char *argv[])
       printf("\t\t-Tag:   %ld\n", tag);
       printf("\t\t-Index: %ld\n", index);
 
-      if (directCache[index][0].tag != tag || directCache[index][0].valid == 0) 
+      if (cache[index][0].tag != tag || cache[index][0].valid == 0) 
       { // when tag doesn't match or index is invalid
         printf("\t\t-MISS\n");
-        directCache[index][0].tag = tag;
-        directCache[index][0].valid = 1;
+        cache[index][0].tag = tag;
+        cache[index][0].valid = 1;
 
         mem_cycles += miss_penalty;
 
-        if (directCache[index][0].dirty) {
+        if (cache[index][0].dirty) {
           // NEED TO WRITE-BACK
           mem_cycles += 2;
           // "Dirty eviction"
           dirty_evictions++;
-          directCache[index][0].dirty = 0;
+          cache[index][0].dirty = 0;
         }
 
         if (loadstore) 
         {
           store_misses++;
-          directCache[index][0].dirty = 1;
+          cache[index][0].dirty = 1;
         } 
         else 
         {
           load_misses++;
         }
       } 
-      else if (directCache[index][0].tag == tag)
+      else if (cache[index][0].tag == tag)
       { // when tag matches
         printf("\t\t-HIT\n");
 
         if (loadstore) 
         {
           store_hits++;
-          directCache[index][0].dirty = 1;
+          cache[index][0].dirty = 1;
         }
         else
         {
