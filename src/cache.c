@@ -10,11 +10,11 @@
  * 
  */
 
-int associativity = 1;        // Associativity of cache
-int blocksize_bytes = 16;     // Cache Block size in bytes
-int cachesize_kb = 16;        // Cache size in KB
-int miss_penalty = 30;        // This won't be getting updated (need to change clockRate to affect this)
-float clockRate = 2;      // Clock speed in GHz
+int associativity = 8;        // Associativity of cache
+int blocksize_bytes = 32;     // Cache Block size in bytes
+int cachesize_kb = 64;        // Cache size in KB
+int miss_penalty = 42;        // This won't be getting updated (need to change clockRate to affect this)
+float clockRate = 2.667;      // Clock speed in GHz
 
 /*
  *
@@ -172,6 +172,63 @@ int main(int argc, char *argv[])
       printf("\t\t-Tag:   %ld\n", tag);
       printf("\t\t-Index: %ld\n", index);
 
+
+      char HIT = 0;                   // Whether a HIT was detected or not
+      int aVal = 0;                   // The associativity location that will be accessed
+
+      for (int a = 0; a < associativity; a++) {
+        if (cache[index][a].tag == tag && cache[index][a].valid == 1) { // HIT is found
+          aVal = a;
+          HIT = 1;
+        }
+      }
+
+      if (HIT) {                      // if a HIT was found ever
+        if (loadstore) {
+          store_hits++;
+        } else {
+          load_hits++;
+        }
+      } else {                        // if no HIT was found among all associativities
+        mem_cycles += miss_penalty;
+        if (loadstore) {
+          store_misses++;
+        } else {
+          load_misses++;
+        }
+
+        // Finds the Least Recently Used associativity value
+        char maxLRU = 0;
+        for (int a = 0; a < associativity; a++) {
+          if (cache[index][a].LRU > maxLRU) {
+            aVal = a;
+          }
+        }
+
+        // Handles the miss
+        cache[index][aVal].tag = tag;
+        cache[index][aVal].valid = 1;
+      } 
+
+      // Adds 1 to all of the LRU values, then resets the value of the block being used 
+      for (int a = 0; a < associativity; a++) {
+        cache[index][a].LRU++;
+      }
+      cache[index][aVal].LRU = 0;
+
+      // Dirty logic
+      if (cache[index][aVal].dirty) {
+        mem_cycles += 2;
+        dirty_evictions++;
+        cache[index][aVal].dirty = 0;
+      }
+
+      // All stores make the thang dirty
+      if (loadstore) {
+        cache[index][aVal].dirty = 1;
+      }
+
+    /* OLD CODE
       if (cache[index][0].tag != tag || cache[index][0].valid == 0) 
       { // when tag doesn't match or index is invalid
         printf("\t\t-MISS\n");
@@ -212,6 +269,8 @@ int main(int argc, char *argv[])
           load_hits++;
         }
       }
+    */
+
 
       i++;
     } 
