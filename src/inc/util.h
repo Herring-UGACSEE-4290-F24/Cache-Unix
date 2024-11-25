@@ -40,10 +40,3 @@ int getTotalCacheBlocks(int cacheSize_kb, int blockSize_b);
 // For direct mapped associativity, used to get location for storage
 long getBlockAddressDirect(long addr, int blockSizeBytes);
 int getBlockNumberDirect(long blockAddress, long numOfBlocks);
-
-// *** Just in case we need to use the heap ***
-// Allocate the cache
-int allocateCache(int associativity, int size, int blockSize);
-
-// Free the cache
-int freeCache();

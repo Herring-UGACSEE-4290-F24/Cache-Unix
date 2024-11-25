@@ -42,13 +42,3 @@ int getBlockNumberDirect(long blockAddress, long numOfBlocks)
 {
   return blockAddress % numOfBlocks;
 }
-
-int allocateCache(int associativity, int totalSize, int blockSize)
-{
-    return 0;
-}
-
-int freeCache()
-{
-    return 0;
-}
