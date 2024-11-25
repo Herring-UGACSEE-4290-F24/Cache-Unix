@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
       j++;
       if (j >= argc)
         print_usage();
-      clockRate = atoi(argv[j]);
+      clockRate = atof(argv[j]);
       j++;
     }
     else
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
       print_usage();
     }
   }
-
+  
   miss_penalty = clockRate * 15;    // Sets the base miss penalty based on clock speed
   switch (blocksize_bytes)          // Adds the extra penalty for larger block sizes
   { 
