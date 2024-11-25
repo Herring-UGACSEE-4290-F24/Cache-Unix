@@ -36,6 +36,7 @@ int load_misses = 0;                // misses on load instructions
 int store_misses = 0;               // misses on store instructions
 int load_hits = 0;                  // hits on load instructions
 int store_hits = 0;                 // hits on store instructions
+double total_time = 0;              // amount of time elapsed
 
 void print_usage()
 {
@@ -249,6 +250,7 @@ int main(int argc, char *argv[])
   avg_mem_access_time = mem_cycles / (double) memory_accesses;
   memory_cpi = mem_cycles / (double) total_instructions;
   total_cpi = total_cycles / (double) total_instructions;
+  total_time = total_cycles / (clockRate * 1000000000);
 
   // Here is where you want to print out stats
   printf("Lines found = %i \n", i);
@@ -259,6 +261,7 @@ int main(int argc, char *argv[])
 
   printf("\texecution time:    %ld cycles\n", total_cycles);
   printf("\tinstructions:      %d\n", total_instructions);
+  printf("\ttotal CPU time:    %.3f seconds\n", total_time);
   printf("\tmemory accesses:   %d\n", memory_accesses);
   printf("\toverall miss rate: %.2f\n", overall_miss_rate);
   printf("\tread miss rate:    %.2f\n", overall_read_miss_rate);
