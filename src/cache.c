@@ -37,6 +37,7 @@ int store_misses = 0;               // misses on store instructions
 int load_hits = 0;                  // hits on load instructions
 int store_hits = 0;                 // hits on store instructions
 double total_time = 0;              // amount of time elapsed
+double cycle_time_modifier = 0;     // percentage increase for time (penalty)
 
 void print_usage()
 {
@@ -118,6 +119,38 @@ int main(int argc, char *argv[])
 
   default:
     miss_penalty += 0;
+    break;
+  }
+
+  switch (cachesize_kb) 
+  {
+  case 32:
+    cycle_time_modifier += 5.0;
+    break;
+  case 64:
+    cycle_time_modifier += 10.0;
+    break;
+  case 128:
+    cycle_time_modifier += 15.0;
+    break;
+  default:
+    cycle_time_modifier += 0;
+    break;
+  }
+
+  switch (associativity)
+  {
+  case 2:
+    cycle_time_modifier += 5.0;
+    break;
+  case 4:
+    cycle_time_modifier += 7.5;
+    break;
+  case 8:
+    cycle_time_modifier += 10.0;
+    break;
+  default:
+    cycle_time_modifier += 0;
     break;
   }
   
@@ -251,6 +284,9 @@ int main(int argc, char *argv[])
   memory_cpi = mem_cycles / (double) total_instructions;
   total_cpi = total_cycles / (double) total_instructions;
   total_time = total_cycles / (clockRate * 1000000000);
+  total_time = total_time * ((100.0 + cycle_time_modifier) / 100.0);
+
+  // NEED TO ALSO CHANGE TOTAL TIME WHEN CACHE AND ASSOCIATIVITY ARE BIGGER
 
   // Here is where you want to print out stats
   printf("Lines found = %i \n", i);
