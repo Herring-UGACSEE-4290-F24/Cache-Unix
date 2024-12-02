@@ -4,6 +4,8 @@
 #include <netinet/in.h>
 #include "inc/util.h"
 
+int noCache = 1;              // Setting for running the program with "no cache" for testing
+
 /*
  *
  * Simulator Knob Definitions
@@ -206,63 +208,72 @@ int main(int argc, char *argv[])
       //printf("\t\t-Tag:   %ld\n", tag);
       //printf("\t\t-Index: %ld\n", index);
 
-
-      int HIT = 0;                   // Whether a HIT was detected or not
-      int aVal = 0;                  // The associativity location that will be accessed
-
-      for (int a = 0; a < associativity; a++) {
-        if (cache[index][a].tag == tag && cache[index][a].valid == 1) { // HIT is found
-          aVal = a;
-          HIT = 1;
-        }
-      }
-
-      if (HIT) {                      // if a HIT was found ever
-        //printf("\t\t-HIT\n");
-        if (loadstore) {
-          store_hits++;
-        } else {
-          load_hits++;
-        }
-      } else {                        // if no HIT was found among all associativities
-        //printf("\t\t-MISS\n");
-        mem_cycles += miss_penalty;
+      if (noCache) {                   // No cache installed
         if (loadstore) {
           store_misses++;
+          mem_cycles += miss_penalty;
         } else {
           load_misses++;
+          mem_cycles += miss_penalty + 2;
         }
+      } else {                         // Normal logic
 
-        // Finds the Least Recently Used associativity value
+        int HIT = 0;                   // Whether a HIT was detected or not
+        int aVal = 0;                  // The associativity location that will be accessed
+
         for (int a = 0; a < associativity; a++) {
-          if (cache[index][a].LRU > cache[index][aVal].LRU) {
+          if (cache[index][a].tag == tag && cache[index][a].valid == 1) { // HIT is found
             aVal = a;
+            HIT = 1;
           }
         }
 
-        // Handles the miss
-        cache[index][aVal].tag = tag;
-        cache[index][aVal].valid = 1;
+        if (HIT) {                      // if a HIT was found ever
+          //printf("\t\t-HIT\n");
+          if (loadstore) {
+            store_hits++;
+          } else {
+            load_hits++;
+          }
+        } else {                        // if no HIT was found among all associativities
+          //printf("\t\t-MISS\n");
+          mem_cycles += miss_penalty;
+          if (loadstore) {
+            store_misses++;
+          } else {
+            load_misses++;
+          }
 
-        // Dirty logic
-        if (cache[index][aVal].dirty) {
-          mem_cycles += 2;
-          dirty_evictions++;
-          cache[index][aVal].dirty = 0;
+          // Finds the Least Recently Used associativity value
+          for (int a = 0; a < associativity; a++) {
+            if (cache[index][a].LRU > cache[index][aVal].LRU) {
+              aVal = a;
+            }
+          }
+
+          // Handles the miss
+          cache[index][aVal].tag = tag;
+          cache[index][aVal].valid = 1;
+
+          // Dirty logic
+          if (cache[index][aVal].dirty) {
+            mem_cycles += 2;
+            dirty_evictions++;
+            cache[index][aVal].dirty = 0;
+          }
+        } 
+
+        // Adds 1 to all of the LRU values, then resets the value of the block being used 
+        for (int a = 0; a < associativity; a++) {
+          cache[index][a].LRU++;
         }
-      } 
+        cache[index][aVal].LRU = 0;
 
-      // Adds 1 to all of the LRU values, then resets the value of the block being used 
-      for (int a = 0; a < associativity; a++) {
-        cache[index][a].LRU++;
+        // All stores make the thang dirty
+        if (loadstore) {
+          cache[index][aVal].dirty = 1;
+        }
       }
-      cache[index][aVal].LRU = 0;
-
-      // All stores make the thang dirty
-      if (loadstore) {
-        cache[index][aVal].dirty = 1;
-      }
-
       i++;
     } 
     else
