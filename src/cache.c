@@ -4,7 +4,7 @@
 #include <netinet/in.h>
 #include "inc/util.h"
 
-int noCache = 1;              // Setting for running the program with "no cache" for testing
+int noCache = 0;              // Setting for running the program with "no cache" for testing
 
 /*
  *
