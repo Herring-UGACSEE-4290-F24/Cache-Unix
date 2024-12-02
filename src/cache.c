@@ -208,16 +208,6 @@ int main(int argc, char *argv[])
       //printf("\t\t-Tag:   %ld\n", tag);
       //printf("\t\t-Index: %ld\n", index);
 
-      if (noCache) {                   // No cache installed
-        if (loadstore) {
-          store_misses++;
-          mem_cycles += miss_penalty;
-        } else {
-          load_misses++;
-          mem_cycles += miss_penalty + 2;
-        }
-      } else {                         // Normal logic
-
         int HIT = 0;                   // Whether a HIT was detected or not
         int aVal = 0;                  // The associativity location that will be accessed
 
@@ -273,7 +263,7 @@ int main(int argc, char *argv[])
         if (loadstore) {
           cache[index][aVal].dirty = 1;
         }
-      }
+        
       i++;
     } 
     else
